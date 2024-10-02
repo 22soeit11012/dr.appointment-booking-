@@ -1,33 +1,38 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
+import 'loginPage.dart';
+import 'chat_page.dart';
+import 'date_page.dart';
 
 class HomePage extends StatelessWidget {
   final String userName;
 
-  // Accept userName in the constructor
   HomePage({required this.userName});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hi: $userName'),  // Display the user's name
+        title: Text('Hi, $userName'),  // Display the user's name
         actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              // Search action
-            },
-          ),
           IconButton(
             icon: Icon(Icons.person),  // Profile icon
             onPressed: () {
-              // Navigate to ProfilePage when clicked
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ProfilePage(),  // Navigate to ProfilePage
                 ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.logout),  // Logout icon
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),  // Navigate to LoginPage
+                (Route<dynamic> route) => false,  // Remove all previous routes
               );
             },
           ),
@@ -71,17 +76,59 @@ class HomePage extends StatelessWidget {
               ),
               SizedBox(height: 10),
               TopDoctorCard(
-                  doctorName: 'Dr. Rahul Sharma',
-                  specialty: 'Dental',
-                  ratings: 585),
+                doctorName: 'Dr. Rahul Sharma',
+                specialty: 'Dental',
+                ratings: 585,
+              ),
               TopDoctorCard(
-                  doctorName: 'Dr. Monika Goyal',
-                  specialty: 'Surgeon',
-                  ratings: 698),
+                doctorName: 'Dr. Monika Goyal',
+                specialty: 'Surgeon',
+                ratings: 698,
+              ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+  items: const <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.chat),
+      label: 'Chat',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.calendar_today),
+      label: 'Date',
+    ),
+  ],
+  onTap: (index) {
+    switch (index) {
+      case 0:
+        // Already on Home, no action needed
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatPage(),  // Navigate to ChatPage
+          ),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DatePage(),  // Navigate to DatePage
+          ),
+        );
+        break;
+    }
+  },
+),
+
     );
   }
 }
@@ -91,8 +138,11 @@ class UpcomingScheduleCard extends StatelessWidget {
   final String specialty;
   final String dateTime;
 
-  UpcomingScheduleCard(
-      {required this.doctorName, required this.specialty, required this.dateTime});
+  UpcomingScheduleCard({
+    required this.doctorName,
+    required this.specialty,
+    required this.dateTime,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +209,11 @@ class TopDoctorCard extends StatelessWidget {
   final String specialty;
   final int ratings;
 
-  TopDoctorCard(
-      {required this.doctorName, required this.specialty, required this.ratings});
+  TopDoctorCard({
+    required this.doctorName,
+    required this.specialty,
+    required this.ratings,
+  });
 
   @override
   Widget build(BuildContext context) {
