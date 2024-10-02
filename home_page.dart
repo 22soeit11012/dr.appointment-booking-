@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'profile_page.dart';
-import 'loginPage.dart';
-import 'chat_page.dart';
-import 'date_page.dart';
-import 'pathology_doctors_page.dart'; // Import the PathologyDoctorsPage
+import 'package:flutter_application_1/Scrreens/chat_page.dart';
+import 'package:flutter_application_1/Scrreens/date_page.dart';
+import 'package:flutter_application_1/Scrreens/immunology_doctors_page.dart';
+import 'package:flutter_application_1/Scrreens/pathology_doctors_page.dart';
+import 'package:flutter_application_1/Scrreens/profile_page.dart';
+import 'package:flutter_application_1/Scrreens/Loginpage.dart';
 
 class HomePage extends StatelessWidget {
   final String userName;
@@ -14,26 +15,26 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('🩺 ~ 𝔹𝕖 ℍ𝕒𝕡𝕡𝕪 ... '), // Display the user's name
+        title: Text('🩺 ~ 𝔹𝕖 ℍ𝕒𝕡𝕡𝕪 ... '),
         actions: [
           IconButton(
-            icon: Icon(Icons.person), // Profile icon
+            icon: Icon(Icons.person),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfilePage(), // Navigate to ProfilePage
+                  builder: (context) => ProfilePage(),
                 ),
               );
             },
           ),
           IconButton(
-            icon: Icon(Icons.logout), // Logout icon
+            icon: Icon(Icons.logout),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()), // Navigate to LoginPage
-                (Route<dynamic> route) => false, // Remove all previous routes
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (Route<dynamic> route) => false,
               );
             },
           ),
@@ -114,7 +115,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatPage(), // Navigate to ChatPage
+                  builder: (context) => ChatPage(),
                 ),
               );
               break;
@@ -122,7 +123,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DatePage(), // Navigate to DatePage
+                  builder: (context) => DatePage(),
                 ),
               );
               break;
@@ -146,18 +147,155 @@ class CategoriesGrid extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PathologyDoctorsPage(), // Navigate to PathologyDoctorsPage
+                builder: (context) => PathologyDoctorsPage(),
               ),
             );
           },
           child: CategoryCard(title: 'Pathology', icon: Icons.biotech),
         ),
-        CategoryCard(title: 'Immunology', icon: Icons.science),
-        CategoryCard(title: 'Gynaecology', icon: Icons.pregnant_woman),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ImmunologyDoctorsPage(),
+              ),
+            );
+          },
+          child: CategoryCard(title: 'Immunology', icon: Icons.science),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GynaecologyDoctorsPage(),
+              ),
+            );
+          },
+          child: CategoryCard(title: 'Gynaecology', icon: Icons.pregnant_woman),
+        ),
         CategoryCard(title: 'Cardiology', icon: Icons.favorite),
         CategoryCard(title: 'Neurology', icon: Icons.psychology),
         CategoryCard(title: 'Quick Test', icon: Icons.health_and_safety),
       ],
+    );
+  }
+}
+
+class GynaecologyDoctorsPage extends StatelessWidget {
+  final List<Doctor> doctors = [
+    Doctor(
+      name: "Dr. Priya Sharma",
+      specialty: "Gynaecologist",
+      address: "1234 Care Avenue, Ahmedabad, Gujarat",
+      rating: 4.6,
+      reviews: [
+        "Dr. Priya is very caring and professional.",
+      ],
+    ),
+    Doctor(
+      name: "Dr. Sanya Patel",
+      specialty: "Obstetrician",
+      address: "5678 Health Lane, Surat, Gujarat",
+      rating: 4.9,
+      reviews: [
+        "Excellent service, highly recommend!",
+      ],
+    ),
+    Doctor(
+      name: "Dr. Neelam Joshi",
+      specialty: "Reproductive Endocrinologist",
+      address: "9101 Wellness Street, Vadodara, Gujarat",
+      rating: 4.7,
+      reviews: [
+        "Took time to explain everything thoroughly.",
+      ],
+    ),
+  ];
+
+GynaecologyDoctorsPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Gynaecology Doctors'),
+        backgroundColor: Colors.pinkAccent,
+      ),
+      body: ListView.builder(
+        itemCount: doctors.length,
+        itemBuilder: (context, index) {
+          return DoctorCard(doctor: doctors[index]);
+        },
+      ),
+    );
+  }
+}
+
+class Doctor {
+  final String name;
+  final String specialty;
+  final String address;
+  final double rating;
+  final List<String> reviews;
+
+  Doctor({
+    required this.name,
+    required this.specialty,
+    required this.address,
+    required this.rating,
+    required this.reviews,
+  });
+}
+
+class DoctorCard extends StatelessWidget {
+  final Doctor doctor;
+
+  DoctorCard({required this.doctor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              doctor.name,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.pinkAccent),
+            ),
+            Text(
+              doctor.specialty,
+              style: TextStyle(fontSize: 16, color: Colors.blueGrey),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              "Address: ${doctor.address}",
+              style: TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+            SizedBox(height: 8.0),
+            Row(
+              children: [
+                Text(
+                  "Rating: ${doctor.rating} ⭐",
+                  style: TextStyle(fontSize: 14, color: Colors.orange),
+                ),
+                SizedBox(width: 10),
+                Icon(Icons.star, color: Colors.orange),
+              ],
+            ),
+            SizedBox(height: 8.0),
+            Text("Reviews:", style: TextStyle(fontWeight: FontWeight.bold)),
+            ...doctor.reviews.map((review) => Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text("• $review", style: TextStyle(color: Colors.black87)),
+            )),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -180,12 +318,11 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: Colors.blue),
+            Icon(icon, size: 40),
             SizedBox(height: 10),
             Text(
               title,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -208,25 +345,11 @@ class UpcomingScheduleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blue[100],
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(doctorName,
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Text(specialty),
-                Text(dateTime, style: TextStyle(color: Colors.grey)),
-              ],
-            ),
-            Icon(Icons.calendar_today),
-          ],
-        ),
+      elevation: 4,
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        title: Text(doctorName),
+        subtitle: Text('$specialty\n$dateTime'),
       ),
     );
   }
@@ -246,22 +369,12 @@ class TopDoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(doctorName,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Text(specialty),
-            Row(
-              children: [
-                Icon(Icons.star, color: Colors.yellow),
-                Text(' $ratings'),
-              ],
-            ),
-          ],
-        ),
+      elevation: 4,
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        title: Text(doctorName),
+        subtitle: Text(specialty),
+        trailing: Text('$ratings ratings'),
       ),
     );
   }
