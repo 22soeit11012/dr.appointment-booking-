@@ -3,6 +3,7 @@ import 'profile_page.dart';
 import 'loginPage.dart';
 import 'chat_page.dart';
 import 'date_page.dart';
+import 'pathology_doctors_page.dart'; // Import the PathologyDoctorsPage
 
 class HomePage extends StatelessWidget {
   final String userName;
@@ -13,26 +14,26 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hi, $userName'),  // Display the user's name
+        title: Text('🩺 ~ 𝔹𝕖 ℍ𝕒𝕡𝕡𝕪 ... '), // Display the user's name
         actions: [
           IconButton(
-            icon: Icon(Icons.person),  // Profile icon
+            icon: Icon(Icons.person), // Profile icon
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfilePage(),  // Navigate to ProfilePage
+                  builder: (context) => ProfilePage(), // Navigate to ProfilePage
                 ),
               );
             },
           ),
           IconButton(
-            icon: Icon(Icons.logout),  // Logout icon
+            icon: Icon(Icons.logout), // Logout icon
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()),  // Navigate to LoginPage
-                (Route<dynamic> route) => false,  // Remove all previous routes
+                MaterialPageRoute(builder: (context) => LoginPage()), // Navigate to LoginPage
+                (Route<dynamic> route) => false, // Remove all previous routes
               );
             },
           ),
@@ -90,45 +91,105 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-  items: const <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.chat),
-      label: 'Chat',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_today),
-      label: 'Date',
-    ),
-  ],
-  onTap: (index) {
-    switch (index) {
-      case 0:
-        // Already on Home, no action needed
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ChatPage(),  // Navigate to ChatPage
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DatePage(),  // Navigate to DatePage
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',
           ),
-        );
-        break;
-    }
-  },
-),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Date',
+          ),
+        ],
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              // Already on Home, no action needed
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatPage(), // Navigate to ChatPage
+                ),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DatePage(), // Navigate to DatePage
+                ),
+              );
+              break;
+          }
+        },
+      ),
+    );
+  }
+}
 
+class CategoriesGrid extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PathologyDoctorsPage(), // Navigate to PathologyDoctorsPage
+              ),
+            );
+          },
+          child: CategoryCard(title: 'Pathology', icon: Icons.biotech),
+        ),
+        CategoryCard(title: 'Immunology', icon: Icons.science),
+        CategoryCard(title: 'Gynaecology', icon: Icons.pregnant_woman),
+        CategoryCard(title: 'Cardiology', icon: Icons.favorite),
+        CategoryCard(title: 'Neurology', icon: Icons.psychology),
+        CategoryCard(title: 'Quick Test', icon: Icons.health_and_safety),
+      ],
+    );
+  }
+}
+
+class CategoryCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  CategoryCard({required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.blue[50],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: Colors.blue),
+            SizedBox(height: 10),
+            Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -166,39 +227,6 @@ class UpcomingScheduleCard extends StatelessWidget {
             Icon(Icons.calendar_today),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CategoriesGrid extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      children: [
-        CategoryCard(title: 'Specialists'),
-        CategoryCard(title: 'Quick Test'),
-        CategoryCard(title: 'Neurologist'),
-        CategoryCard(title: 'Cardiology'),
-      ],
-    );
-  }
-}
-
-class CategoryCard extends StatelessWidget {
-  final String title;
-
-  CategoryCard({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Center(
-        child: Text(title,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       ),
     );
   }
