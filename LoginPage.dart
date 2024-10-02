@@ -1,7 +1,8 @@
-//login page
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key); // Add const and key
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -15,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20), // Add const
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 36,
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30), // Add const
                   _buildGradientTextField(
                     label: 'Email',
                     icon: Icons.email,
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                       _email = value;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20), // Add const
                   _buildGradientTextField(
                     label: 'Password',
                     icon: Icons.lock,
@@ -75,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                       _password = value;
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30), // Add const
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -87,15 +88,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        padding: EdgeInsets.symmetric(vertical: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 15), // Add const
                         shadowColor: Colors.black.withOpacity(0.3),
                         elevation: 5,
                       ),
                       onPressed: () {
-                       
-                          Navigator.pushNamed(context, '/HomePage');
-                      
-                        
+                        Navigator.pushNamed(context, '/HomePage');
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -107,17 +105,17 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         }
                       },
-                      child: Text(
+                      child: const Text( // Add const
                         'Login',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20), // Add const
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text( // Add const
                         "Don't have an account?",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -125,14 +123,14 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           Navigator.pushNamed(context, '/signup');
                         },
-                        child: Text(
+                        child: const Text( // Add const
                           'signup',
                           style: TextStyle(
                             color: Colors.yellowAccent,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -160,21 +158,21 @@ class _LoginPageState extends State<LoginPage> {
             ),
             borderRadius: BorderRadius.circular(12),
           ),
-          padding: EdgeInsets.all(2),
+          padding: const EdgeInsets.all(2), // Add const
           child: Container(
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextFormField(
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white), // Add const
               obscureText: obscureText,
               decoration: InputDecoration(
                 labelText: label,
-                labelStyle: TextStyle(color: Colors.white),
+                labelStyle: const TextStyle(color: Colors.white), // Add const
                 prefixIcon: Icon(icon, color: Colors.white),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 18),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18), // Add const
               ),
               validator: validator,
               onSaved: onSaved,
